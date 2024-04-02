@@ -1,3 +1,13 @@
+# 使用指南
+首先需要在本地环境中包含有Xelatex或是latexmk，并且已经正确安装make 工具。
+
+直接Clone 本项目到本地，之后使用make 进行编译：
+```shell
+
+make 
+```
+编译后会生成一个`main.pdf`文件，该文件即为符合2023年重庆大学毕业论文格式要求的文件。
+
 # 车载信息物理融合系统建模与优化关键技术研究
 
 > Research on Key Techniques for Modeling and Optimization of Vehicular Cyber-Physical Systems
