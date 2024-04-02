@@ -2,9 +2,36 @@
 # Adapted from Thuthesis Makefile
 
 # Compiling method: latexmk/xelatex/pdflatex
-METHOD = latexmk
-# Set opts for latexmk if you use it
-LATEXMKOPTS = -xelatex -quiet -halt-on-error -interaction=nonstopmode
+# 默认情况下，设置 METHOD 为 pdflatex
+METHOD=pdflatex
+
+# 检测 latexmk 是否可用
+LATEXMK_AVAILABLE := $(shell command -v latexmk 2> /dev/null)
+
+# 检测 xelatex 是否可用
+XELATEX_AVAILABLE := $(shell command -v xelatex 2> /dev/null)
+
+# 如果 latexmk 可用，优先使用 latexmk
+ifeq ($(LATEXMK_AVAILABLE),)
+    # latexmk 不可用，检测 xelatex
+    ifeq ($(XELATEX_AVAILABLE),)
+        # xelatex 也不可用，将使用默认的 pdflatex
+        $(info Using pdflatex as fallback)
+    else
+        # xelatex 可用
+        METHOD=xelatex
+				LATEXMKOPTS = -quiet -halt-on-error -interaction=nonstopmode
+    endif
+else
+    # latexmk 可用
+    METHOD=latexmk
+		# Set opts for latexmk if you use it
+		LATEXMKOPTS = -xelatex -quiet -halt-on-error -interaction=nonstopmode
+endif
+
+# 打印当前使用的方法
+$(info Using METHOD=$(METHOD))
+
 # Basename of thesis
 THESISMAIN = main
 
